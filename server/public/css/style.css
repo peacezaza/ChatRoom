@@ -27,7 +27,7 @@
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
 }
@@ -40,7 +40,7 @@
     box-sizing: border-box;
     border: 2px solid red;
     border-radius: 4px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 }
 
@@ -49,7 +49,7 @@
     list-style-type: none; /* Remove default list styling */
     padding: 0; /* Remove default padding */
     margin: 0; /* Remove default margin */
-    position: absolute;
+    position: fixed;
     top: 50px /* Adjust this value as needed */
 }
 
