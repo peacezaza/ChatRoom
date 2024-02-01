@@ -17,6 +17,43 @@
     height: 1000px;
     background: #1F2544;
 }
+
+#display_page button{
+    display: none;
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#display_page input{
+    display: none;
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+}
+
+#display_page ul {
+    display: none;
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    position: absolute;
+    top: 50px /* Adjust this value as needed */
+}
+
+
 #server_bar
 {
     width: 8%;
