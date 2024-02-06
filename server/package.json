@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon server"
+    "dev": "nodemon index.js"
   },
   "author": "Kanisorn Katekuean",
   "license": "MIT",
