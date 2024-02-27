@@ -26,7 +26,7 @@ function hashPassword(password) {
 }
 
 function checkPassword(username, password) {
-  const user = usersDatabase.find((u) => u.username === username);
+  const user = usersDatabase.find((u) => (u.username === username || u.email === username) );
 
   if (user) {
     return bcrypt.compareSync(password, user.password);

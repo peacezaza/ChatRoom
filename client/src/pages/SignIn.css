@@ -1,0 +1,161 @@
+/* Styles for the body */
+body {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Take up full viewport height */
+  margin: 0; /* Remove default margin */
+  background-color: #E0E1DD; /* Semi-transparent black background */
+}
+
+/* Styles for the main container */
+.container {
+  width: 500px; /* Set width */
+  margin: auto; /* Center horizontally */
+  padding: 80px; /* Add padding */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 50px; /* Rounded corners */
+  background-color: rgba(249, 249, 249, 0.7); /* Semi-transparent white background */
+}
+
+/* Styles for the header */
+.head {
+  font-size: 30px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  margin-bottom: 30px; /* Add margin at the bottom */
+  color: #0D1B2A; /* Set text color */
+}
+
+/* Styles for input labels */
+.input-label {
+  display: block; /* Make block level */
+  margin-bottom: 10px; /* Add margin at the bottom */
+  font-size: 18px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  color: #415A77; /* Set text color */
+}
+
+.space {
+  margin-bottom: 20px;
+}
+
+/* Styles for input fields */
+.input-field {
+  width: 100%; /* Take up full width */
+  padding: 20px 3px; /* Add padding */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 50px; /* Rounded corners */
+  margin-bottom: 20px; /* Add margin at the bottom */
+  font-size: 18px; /* Set font size */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+}
+
+/* Styles for password input container */
+.password-input {
+  position: relative; /* Position relative for absolute positioning */
+}
+
+/* Styles for password visibility icon */
+.password-icon {
+  position: absolute; /* Position absolute */
+  top: 40%; /* Align vertically */
+  left: 460px; /* Position from the right */
+  transform: translateY(-50%); /* Center vertically */
+  cursor: pointer; /* Add cursor pointer */
+}
+
+/* Styles for form row */
+.form-row {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between elements */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 40px; /* Add margin at the bottom */
+  font-size: 18px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+}
+
+/* Styles for remember me checkbox */
+.remember-me {
+  margin-right: 20px; /* Add margin on the right */
+  color: #415A77; /* Set text color */
+}
+
+/* Styles for forgot password link */
+.forgot-password {
+  cursor: pointer; /* Add cursor pointer */
+  color: #415A77; /* Set text color */
+}
+
+/* Styles for forgot password link on hover */
+.forgot-password:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Styles for button */
+button {
+  display: block; /* Make block level */
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px 70px; /* Add padding */
+  background-color: #0D1B2A; /* Set background color */
+  color: #fff; /* Set text color */
+  border: none; /* Remove border */
+  border-radius: 50px; /* Rounded corners */
+  cursor: pointer; /* Add cursor pointer */
+  font-size: 24px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  margin-bottom: 40px; /* Add margin at the bottom */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+}
+
+/* Styles for line divider */
+.line {
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Align items vertically */
+  margin-top: 20px; /* Add margin at the top */
+  margin-bottom: 20px; /* Add margin at the bottom */
+  font-size: 20px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+}
+
+/* Styles for divider */
+.divider {
+  flex-grow: 1; /* Grow to fill available space */
+  border: none; /* Remove default border */
+  border-top: 3px solid #0D1B2A; /* Set border style */
+}
+
+/* Styles for "or" text */
+.or-text {
+  margin: 0 30px; /* Add margin on the sides */
+}
+
+/* Styles for social icons */
+.social-icons {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center horizontally */
+  margin-top: 20px; /* Add margin at the top */
+}
+
+/* Styles for Facebook and Google icons */
+.facebook-icon,
+.google-icon {
+  font-size: 40px; /* Set font size */
+  margin: 0 20px; /* Add margin on the sides */
+  color: #0056b3; /* Set icon color */
+}
+
+/* Styles for Facebook and Google icons on hover */
+.facebook-icon:hover,
+.google-icon:hover {
+  opacity: 0.8; /* Reduce opacity on hover */
+}
+
+/* Styles for button on hover */
+button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+
+/* Styles for h2 */
+h2 {
+  text-align: center; /* Center align text */
+}
