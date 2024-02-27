@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "username": "kong11",
+    "password": "$2b$10$ED7.Ymcv923jJQnypjDCgOLltuIIIH8inAid9YmusiKBZCQqxxrqu",
+    "email": "kong12"
+  },
+  {
+    "id": 2,
+    "username": "kong123",
+    "password": "$2b$10$fz8/cNmJQgyBUgRnBNVroeHCSi2RZ7d2/GMTKh5pmhYy.ZGnmv9oW",
+    "email": "pannet.v@ku.th"
+  }
+]

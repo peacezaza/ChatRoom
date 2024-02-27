@@ -20,8 +20,10 @@ app.use(bodyParser.json());
 // Login endpoint
 app.post('/login', (req, res) => {
   const requestData = req.body;
+  let password = requestData.password;
+  password = password.toString()
   console.log(usersDatabase); // Now, usersDatabase is available for logging
-  if (checkPassword(requestData.username, requestData.password)) {
+  if (checkPassword(requestData.username, password)) {
     return res.send("Login success!");
   } else {
     res.send("Login fail");
