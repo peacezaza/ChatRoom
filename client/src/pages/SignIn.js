@@ -17,6 +17,7 @@ function LoginPage() {
   const [forgotPasswordClicked, setForgotPasswordClicked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for showing password
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [loginText, setLoginText] = useState('');
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
@@ -38,14 +39,15 @@ function LoginPage() {
       const response = await axios.post('http://127.0.0.1:5000/login', {username , password});
       console.log(response.statusText)
       if (response.status === 201) {
+          setLoginText("Login Successful")
           console.log('login successfully');
           setIsPopupOpen(true);
           await sleep(3000)
           setIsPopupOpen(false)
-
       }
   }
 catch (error) {
+      setLoginText('Login Failed')
       setIsPopupOpen(true)
       await sleep(3000)
       setIsPopupOpen(false)
@@ -128,7 +130,7 @@ catch (error) {
       {/* Pop-up for successful login */}
       <Popup open={isPopupOpen} closeOnDocumentClick >
         <div className="popup-content">
-          <p>Login successful!</p>
+          <p>{loginText}</p>
         </div>
       </Popup>
 

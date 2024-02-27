@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { addUser, checkPassword, usersDatabase } = require('./user.js');
+const { addUser, checkPassword, usersDatabase , checkDuplicateUser, checkDuplicateEmail} = require('./user.js');
 const {addMessage , messages} = require('./message.js')
 const cors = require('cors');
 const app = express();
@@ -40,9 +40,15 @@ app.post('/register', (req, res) => {
   const requestData = req.body;
   const jsonString = JSON.stringify(requestData, null, 2);
   // const hashedPassword = hashPassword(requestData.password);
-  addUser(requestData.username, requestData.password, requestData.email);
-  console.log(requestData);
-  return res.status(201).send("Welcome");
+  if(checkDuplicateUser(requestData.username) || checkDuplicateEmail(requestData.email)){
+    return res.status(409).send("Already Exists")
+  }
+  else{
+    addUser(requestData.username, requestData.password, requestData.email);
+    console.log(requestData);
+    console.log("TAP")
+    return res.status(201).send("Welcome");
+  }
 });
 
 // WebSocket (Socket.io) integration

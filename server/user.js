@@ -48,10 +48,21 @@ function addUser(username, password, email) {
   console.log('User added successfully.');
 }
 
+function checkDuplicateUser(username){
+
+  return usersDatabase.find((u) => (u.username === username))
+}
+
+function checkDuplicateEmail(email){
+  return usersDatabase.find((u) => (u.email === email))
+}
+
 initializeDatabase();
 
 module.exports = {
   addUser,
   checkPassword,
   usersDatabase, // Exporting the usersDatabase array for use in other files
+  checkDuplicateUser,
+  checkDuplicateEmail
 };

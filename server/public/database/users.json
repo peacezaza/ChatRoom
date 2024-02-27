@@ -34,5 +34,17 @@
     "username": "chokza",
     "password": "$2b$10$EVWGQGYs8kRu71xEJZ7/PO9LR0Bnw20MypC5gkiOTugN8ZwtNE.VO",
     "email": "qaw"
+  },
+  {
+    "id": 7,
+    "username": "qaw",
+    "password": "$2b$10$7lF0rkC4A5EXdojVjqOzYuVaCmHGnZA9ns5f9CEcnziHcOFZVg48C",
+    "email": "sadfasf"
+  },
+  {
+    "id": 8,
+    "username": "kanisorn",
+    "password": "$2b$10$AuxXOuS2dIVgFNWGmYHR/ujvbg4ckiflFDF0.QFHzDohya9y1Lb3K",
+    "email": "sadfasfsd"
   }
 ]

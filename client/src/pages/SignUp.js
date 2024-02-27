@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import './SignUp.css';
 import { Link } from 'react-router-dom';
 
@@ -14,6 +16,8 @@ function LoginPage() {
   const [conPassword, setConPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConPassword, setShowConPassword] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [signUpText, setSignupText] = useState('')
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -23,11 +27,20 @@ function LoginPage() {
     setShowConPassword(!showConPassword);
   };
 
+  function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   const handleSignUp = async () => {
     console.log('register in with:', { username, email, password, conPassword});
     try {
           const response = await axios.post('http://127.0.0.1:5000/register', {username, email, password});
           if (response.status === 201) {
+              setSignupText("Sign up Successful")
+              setIsPopupOpen(true)
+              await sleep(3000)
+              setIsPopupOpen(false)
+
               console.log('Product added successfully');
           } else {
               console.error('Failed to add product');
@@ -35,6 +48,10 @@ function LoginPage() {
       } 
     catch (error) {
         console.error('Error adding product:', error);
+        setSignupText("Username or Email is alreay Exists")
+        setIsPopupOpen(true)
+        await sleep(3000)
+        setIsPopupOpen(false)
     }
   };
 
@@ -87,7 +104,7 @@ function LoginPage() {
             onClick={toggleConPasswordVisibility}
           />
         </div>
-        <button type="button" onClick={handleSignUp}>Sign in</button>
+        <button type="button" onClick={handleSignUp}>Sign Up</button>
         <div className="form-row">
           <label className="have-acc">Already have an account ?</label>
           {/* <a href="#" className="login-page">Login</a> */}
@@ -107,6 +124,12 @@ function LoginPage() {
           <FontAwesomeIcon icon={faGoogle} className="google-icon" />
         </a>
       </div>
+        {/* Pop-up for successful login */}
+        <Popup open={isPopupOpen} closeOnDocumentClick >
+            <div className="popup-content">
+                <p>{signUpText}</p>
+            </div>
+        </Popup>
     </div>
   );
 }
