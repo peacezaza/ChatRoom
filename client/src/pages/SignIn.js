@@ -36,19 +36,19 @@ function LoginPage() {
     // password = password.toString()
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', {username , password});
+      console.log(response.statusText)
       if (response.status === 201) {
           console.log('login successfully');
           setIsPopupOpen(true);
           await sleep(3000)
           setIsPopupOpen(false)
 
-      } else {
-          console.error('Failed to login');
-          await sleep(5000)
       }
   }
 catch (error) {
-    console.error('Error adding product:', error);
+      setIsPopupOpen(true)
+      await sleep(3000)
+      setIsPopupOpen(false)
 }
   };
 

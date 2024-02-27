@@ -29,11 +29,9 @@ app.post('/login',  (req, res) => {
   password = password.toString()
   // console.log(usersDatabase); // Now, usersDatabase is available for logging
   if (checkPassword(requestData.username, password)) {
-    console.log("Login success!")
     return res.status(201).send("Login success!");
   } else {
-    console.log("Login Failed")
-    res.status(404).send("Login fail");
+    res.status(401).send("Login fail");
   }
 });
 
