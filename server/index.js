@@ -17,16 +17,23 @@ app.use(bodyParser.json());
 
 // API Endpoints
 
+// Sleep Function
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Login endpoint
-app.post('/login', (req, res) => {
+app.post('/login',  (req, res) => {
   const requestData = req.body;
   let password = requestData.password;
   password = password.toString()
-  console.log(usersDatabase); // Now, usersDatabase is available for logging
+  // console.log(usersDatabase); // Now, usersDatabase is available for logging
   if (checkPassword(requestData.username, password)) {
-    return res.send("Login success!");
+    console.log("Login success!")
+    return res.status(201).send("Login success!");
   } else {
-    res.send("Login fail");
+    console.log("Login Failed")
+    res.status(404).send("Login fail");
   }
 });
 
@@ -37,7 +44,7 @@ app.post('/register', (req, res) => {
   // const hashedPassword = hashPassword(requestData.password);
   addUser(requestData.username, requestData.password, requestData.email);
   console.log(requestData);
-  return res.status(404).send("Welcome");
+  return res.status(201).send("Welcome");
 });
 
 // WebSocket (Socket.io) integration

@@ -3,6 +3,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 // Consider grouping the import statements to enhance readability
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './SignIn.css';
@@ -14,14 +16,21 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [forgotPasswordClicked, setForgotPasswordClicked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for showing password
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  // sleep function
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   // Function to handle login action
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     // Implement your login logic here
     console.log('Logging in with:', { username, password, rememberMe });
     // password = password.toString()
@@ -29,10 +38,15 @@ function LoginPage() {
       const response = await axios.post('http://127.0.0.1:5000/login', {username , password});
       if (response.status === 201) {
           console.log('login successfully');
+          setIsPopupOpen(true);
+          await sleep(3000)
+          setIsPopupOpen(false)
+
       } else {
           console.error('Failed to login');
+          await sleep(5000)
       }
-  } 
+  }
 catch (error) {
     console.error('Error adding product:', error);
 }
@@ -104,13 +118,20 @@ catch (error) {
       </div>
       {/* Social media login options */}
       <div className="social-icons">
-        <a href="https://facebook.com">
+        <a href="#">
           <FontAwesomeIcon icon={faFacebook} className="facebook-icon" />
         </a>
-        <a href="https://google.com">
+        <a href="#">
           <FontAwesomeIcon icon={faGoogle} className="google-icon" />
         </a>
       </div>
+      {/* Pop-up for successful login */}
+      <Popup open={isPopupOpen} closeOnDocumentClick >
+        <div className="popup-content">
+          <p>Login successful!</p>
+        </div>
+      </Popup>
+
     </div>
   );
 }
