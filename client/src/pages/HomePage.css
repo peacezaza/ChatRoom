@@ -1,0 +1,14 @@
+.white-text-box{
+    background: #ffffff;
+    position: absolute;
+    font-size: 20px;
+    border-radius: 70px;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.centerText{
+    text-align: center;
+}
