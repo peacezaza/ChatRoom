@@ -62,7 +62,7 @@ catch (error) {
   };
 
   return (
-    <div className="container">
+    <div className="container" >
       {/* Login form */}
       <div className="head">
         <h2>Sign In</h2>
