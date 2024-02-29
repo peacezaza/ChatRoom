@@ -1,9 +1,9 @@
 .white-text-box{
     background: #ffffff;
     position: absolute;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 70px;
-    padding: 10px;
+    padding: 25px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -11,4 +11,7 @@
 
 .centerText{
     text-align: center;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0;
 }
