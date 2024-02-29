@@ -8,6 +8,8 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const socket = require("socket.io");
+const jwt = require('jsonwebtoken');
+const secretKey = 'secret_key';
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,9 +29,13 @@ app.post('/login',  (req, res) => {
   const requestData = req.body;
   let password = requestData.password;
   password = password.toString()
+  let username = requestData.username;
   // console.log(usersDatabase); // Now, usersDatabase is available for logging
-  if (checkPassword(requestData.username, password)) {
-    return res.status(201).send("Login success!");
+  // res;
+  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+  if (checkPassword(username, password)) {
+
+    return res.header('Authorization', token).status(201).send({messages:"Login success!",token});
   } else {
     res.status(401).send("Login fail");
   }
