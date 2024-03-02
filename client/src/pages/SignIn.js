@@ -3,7 +3,9 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { Navigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import { useNavigate } from "react-router-dom";
 import 'reactjs-popup/dist/index.css';
 // Consider grouping the import statements to enhance readability
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +20,7 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false); // State for showing password
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [loginText, setLoginText] = useState('');
+  const navigate = useNavigate();
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
@@ -37,13 +40,17 @@ function LoginPage() {
     // password = password.toString()
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', {username , password});
+      let token = response.data['token']
+      // console.log(response.data['token'])
       console.log(response.statusText)
       if (response.status === 201) {
+          localStorage.setItem('token',token);
           setLoginText("Login Successful")
           console.log('login successfully');
           setIsPopupOpen(true);
           await sleep(3000)
           setIsPopupOpen(false)
+          navigate('/message');
       }
   }
 catch (error) {

@@ -1,62 +1,51 @@
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import * as React from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import HomePage from './pages/HomePage';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomePage/>,
-  },
-  {
-    path: "/signup",
-    element: <SignUp/>,
-  },
-  {
-    path: "/signin",
-    element: <SignIn/>,
-  },
-]);
+import PrivateRoutes from './pages/PrivateRoutes';
+import ServerPage from './pages/private/ServerPage';
 
 
-// export default function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<HomePage/>}>
-//           <Route index element={<HomePage />} />
-//           <Route path="signin" element={<SignIn/>} />
-//           <Route path="signup" element={<SignUp />} />
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <HomePage/>,
+//   },
+//   {
+//     path: "/signup",
+//     element: <SignUp/>,
+//   },
+//   {
+//     path: "/signin",
+//     element: <SignIn/>,
+//   },
+// ]);
 
 
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
 //   <React.StrictMode>
-//     {/* <App /> */}
-//     <HomePage/>
+//     <RouterProvider router={router} />
 //   </React.StrictMode>
 // );
 
-// root.render(<App/>);
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/message' element={<PrivateRoutes/>}>
+            <Route index element={<ServerPage />} />
+          </Route>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+ReactDOM.render(<App />, document.getElementById('root'));
