@@ -5,11 +5,7 @@ body {
   align-items: center; /* Center vertically */
   height: 100vh; /* Take up full viewport height */
   margin: 0; /* Remove default margin */
-<<<<<<< HEAD
-  background-image: url("../../public/BackgroundPicture.jpg");
-=======
   background-image: url("../../public/images/BackgroundPicture.jpg");
->>>>>>> d4c9b98a4f46bf98ed768e097f6f45366ba6b316
   background-size: cover; /* Cover the entire body with the background image */
   background-position: center; /* Center the background image */
 }
