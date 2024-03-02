@@ -5,10 +5,11 @@ body {
   align-items: center; /* Center vertically */
   height: 100vh; /* Take up full viewport height */
   margin: 0; /* Remove default margin */
-  background-image: url("D:/code/ChatRoom/client/public/BackgroundPicture.jpg");
+  background-image: url("../../public/BackgroundPicture.jpg");
   background-size: cover; /* Cover the entire body with the background image */
   background-position: center; /* Center the background image */
 }
+
 
 /* Styles for the main container */
 .container {
