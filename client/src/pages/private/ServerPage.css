@@ -1,0 +1,47 @@
+.con
+{
+    background: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+.side-bar
+{
+    width: 5%;
+    height: 100%;
+    background: #0D1B2A;
+}
+.content
+{
+    width: 95%;
+    background: #415A77;
+    display: flex;
+    flex-direction:column;
+}
+.nav-bar
+{
+    height: 85px;
+    width: 100%;
+    background: #303E5A;
+}
+.channel
+{
+    height: 100%;
+    width: 100%;
+    background: #415A77;
+    display: flex;
+    flex-direction: row;
+}
+.side-bar-channel
+{
+    height: 100%;
+    width: 15%;
+    background: #415A77;
+}
+.chat
+{
+    height: 100%;
+    width: 85%;
+    background: #778DA9;
+}
+/* 303E5A */
