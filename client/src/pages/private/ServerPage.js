@@ -1,10 +1,24 @@
+import'./ServerPage.css'
+
+const get_server = ()=>{
+    
+}
+
 function ServerPage(){
     return(
-        <>
-            <h1>Hello ,Private Page</h1>
-        </>
+        <div className='con'>
+            <div className="side-bar"></div>
+            <div className="content">
+                <div className='nav-bar'></div>
+                <div className='channel'>
+                    <div className='side-bar-channel'></div>
+                    <div className='chat'></div>
+                </div>
+            </div>
+        </div>
     )
 }
+
 
 
 
