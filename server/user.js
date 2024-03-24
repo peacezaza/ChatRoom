@@ -42,12 +42,27 @@ function addUser(username, password, email) {
     username,
     password: hashedPassword,
     email,
+    serverList:[],
   };
   usersDatabase.push(newUser);
   saveDatabase();
   console.log('User added successfully.');
 }
 
+function addServerList(username, servername) {
+  let user = usersDatabase.find(u => u.username === username);
+  console.log(user);
+  if (user && Array.isArray(user.ServerList)) {
+      if (!user.ServerList.includes(servername)) {
+          user.ServerList.push(servername);
+          saveDatabase(usersDatabase); // Assuming you have a saveDatabase function
+      } else {
+          console.log('Server already exists in the list.');
+      }
+  } else {
+      console.log('User not found or ServerList is not an array.');
+  }
+}
 function checkDuplicateUser(username){
 
   return usersDatabase.find((u) => (u.username === username))
@@ -63,6 +78,7 @@ module.exports = {
   addUser,
   checkPassword,
   usersDatabase, // Exporting the usersDatabase array for use in other files
+  addServerList,
   checkDuplicateUser,
   checkDuplicateEmail
 };

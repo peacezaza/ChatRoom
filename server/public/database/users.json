@@ -1,56 +1,9 @@
 [
   {
     "id": 1,
-    "username": "kong11",
-    "password": "$2b$10$ED7.Ymcv923jJQnypjDCgOLltuIIIH8inAid9YmusiKBZCQqxxrqu",
-    "email": "kong12"
-  },
-  {
-    "id": 2,
     "username": "kong123",
     "password": "$2b$10$fz8/cNmJQgyBUgRnBNVroeHCSi2RZ7d2/GMTKh5pmhYy.ZGnmv9oW",
-    "email": "pannet.v@ku.th"
-  },
-  {
-    "id": 3,
-    "username": "chok",
-    "password": "$2b$10$QTRCl9oFPDex0JU.AyKbXe5qVO9IQ/jUBMwvA6/anL9sWxp5iHxJ2",
-    "email": "qaw"
-  },
-  {
-    "id": 4,
-    "username": "chok",
-    "password": "$2b$10$jf8tHSeTTfcwuuwh0iB5oO8/wdaB/ySem3I1h.Weh9M2W1A/xXzBu",
-    "email": "qaw"
-  },
-  {
-    "id": 5,
-    "username": "chok",
-    "password": "$2b$10$FcIoKYah33wBP0NwCs5VkenXhw70jzo77FV7HzbSD.og/E2gJRJ3u",
-    "email": "qaw"
-  },
-  {
-    "id": 6,
-    "username": "chokza",
-    "password": "$2b$10$EVWGQGYs8kRu71xEJZ7/PO9LR0Bnw20MypC5gkiOTugN8ZwtNE.VO",
-    "email": "qaw"
-  },
-  {
-    "id": 7,
-    "username": "qaw",
-    "password": "$2b$10$7lF0rkC4A5EXdojVjqOzYuVaCmHGnZA9ns5f9CEcnziHcOFZVg48C",
-    "email": "sadfasf"
-  },
-  {
-    "id": 8,
-    "username": "kanisorn",
-    "password": "$2b$10$AuxXOuS2dIVgFNWGmYHR/ujvbg4ckiflFDF0.QFHzDohya9y1Lb3K",
-    "email": "sadfasfsd"
-  },
-  {
-    "id": 9,
-    "username": "qaw1",
-    "password": "$2b$10$v0ArFiJsH1Houy/b/mpBZubo4QBq3KacuwuV0nExyvmnbFoOBI.ZC",
-    "email": "wefdg"
+    "email": "pannet.v@ku.th",
+    "ServerList": []
   }
 ]
