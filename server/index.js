@@ -72,6 +72,17 @@ app.post('/addServer' , (req,res) => {
   });
 })
 
+app.get('/verify' , (req,res) => {
+  const token = req.query.token;
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    else{
+      return res.status(200).json({ message: 'valid token' });
+    }
+  })
+})
 
 app.get('/getServerList', (req, res) => {
   const token = req.query.token; // Assuming token is passed as a query parameter
