@@ -1,8 +1,31 @@
 import SignIn from './SignIn'
 import { Outlet, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import HomePage from './HomePage.css'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function App(){
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            axios.get(`http://127.0.0.1:5000/verify?token=${token}`)
+                .then(response => {
+                    // Handle successful response
+                    console.log('message', response.data);
+                    navigate('/message');
+                    // setServerList(response.data); // Assuming the response is an array of server data
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('message', error);
+                });
+        } else {
+            console.log('No token found');
+        }
+    })
+    
     const divStyle = {
         backgroundImage: `url('page_rec.png')`,
         backgroundSize: 'cover',

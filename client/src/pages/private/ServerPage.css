@@ -7,6 +7,9 @@
 }
 .side-bar
 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 5%;
     height: 100%;
     background: #0D1B2A;
@@ -75,12 +78,35 @@
 
 .addServer
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
     background-color: #D9D9D9;
-    padding: 50%;
-    /*border-radius: 50%;*/
+    padding: 40%;
+    border-radius: 50%;
+    margin: 10px 0px 0px 0px;
+}
+.addServer img{
+    width: 30px;
+    height: 30px;
 }
 
 .addServer:hover
 {
     background-color: #778DA9;
+}
+
+.window-add-server 
+{
+    background-color: #778DA9; /* Desired background color */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+  
+.window-add-server h2 
+{
+    margin-top: 0;
 }
