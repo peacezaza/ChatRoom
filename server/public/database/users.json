@@ -5,5 +5,15 @@
     "password": "$2b$10$fz8/cNmJQgyBUgRnBNVroeHCSi2RZ7d2/GMTKh5pmhYy.ZGnmv9oW",
     "email": "pannet.v@ku.th",
     "ServerList": []
+  },
+  {
+    "id": 2,
+    "username": "qaw",
+    "password": "$2b$10$fPS/RlXva1Lw7.Pray7WIeX.h/fjL.sWhqxbYUCKIwypzkz/ll992",
+    "email": "qaw",
+    "ServerList": [
+      "Kan",
+      "kak"
+    ]
   }
 ]

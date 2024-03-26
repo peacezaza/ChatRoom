@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import axios from "axios";
 
+import Channel from './Component/Channel';
+import {Route} from "react-router-dom";
+
 
 
 
@@ -10,6 +13,11 @@ import axios from "axios";
 function ServerPage(){
     const [selectedImage, setSelectedImage] = useState(null);
     const [serverList, setServerList] = useState([]);
+    const [serverClicked, setServerClicked] = useState(false);
+    const [serverName, setServerName] = useState('')
+
+
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -57,6 +65,15 @@ function ServerPage(){
             console.log("Error")
         }
     };
+
+    const handleServerClick = (server) => {
+        console.log(server.serverName)
+        setServerClicked(true);
+        setServerName(server.serverName)
+
+
+    };
+
     return(
         <div className='con'>
             <div className="side-bar">
@@ -65,7 +82,7 @@ function ServerPage(){
                     <div className="server-list">
                         {serverList.map((server, index) => (
                             <div key={index}>
-                                <button className="addServer">
+                                <button className="addServer" onClick={() => handleServerClick(server)}>
                                     <img src={server.base64String} alt={`Server ${index}`} className="server-image" />
                                 </button>
                             </div>
@@ -79,8 +96,10 @@ function ServerPage(){
                                 <div>
                                     <label>Server Name </label>
                                     <input type='text' className='AddServerName' placeholder='Enter Name Server'/>
+
                                 </div>
                                 <div>
+                                    <br/>
                                     <input type="file" accept="image/*" onChange={handleImageChange} />
                                     {selectedImage && (
                                         <div>
@@ -98,7 +117,10 @@ function ServerPage(){
             <div className="content">
                 <div className='nav-bar'></div>
                 <div className='channel'>
-                    <div className='side-bar-channel'></div>
+                    <div className='side-bar-channel'>
+                        {serverClicked &&  <Channel propFromParent={serverName}/>}
+
+                    </div>
                     <div className='chat'>
                         <div>
                             <input type='text' className='ChatInput' placeholder='TypeHere...'/>

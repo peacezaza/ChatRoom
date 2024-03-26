@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const { addUser, checkPassword, usersDatabase , checkDuplicateUser, checkDuplicateEmail , addServerList} = require('./user.js');
 const {addMessage , messages} = require('./message.js')
-const { addServer, saveDatabase ,getBase64StringByName} = require('./chatServer.js');
+const { addServer, saveDatabase ,getBase64StringByName, getChannelList, addChannel} = require('./chatServer.js');
 const cors = require('cors');
 const app = express();
 const http = require('http');
@@ -99,7 +99,8 @@ app.get('/getServerList', (req, res) => {
               const response = user.ServerList.map(server => {
                   // Assuming you have a function to retrieve base64 string for each server
                   const base64String = getBase64StringByName(server);
-                  return { serverName: server, base64String };
+                  const channelList = getChannelList(server)
+                  return { serverName: server, base64String, channelList};
               });
               res.status(200).json(response);
           } else {
@@ -108,6 +109,37 @@ app.get('/getServerList', (req, res) => {
       }
   });
 });
+
+
+app.post('/addChannel',(req,res) => {
+    try{
+        const requestData = req.body;
+        console.log(requestData);
+        addChannel(requestData.serverName, requestData.channelName)
+    }
+    catch(error){
+        console.log(error)
+        res.send(error)
+    }
+});
+
+app.get('/getChannel',(req,res) =>{
+    try{
+        const serverName = req.query.name;
+
+        // Assuming getChannelList() returns some data
+        const channelList = getChannelList(serverName);
+        // console.log(channelList)
+
+        // Sending the response back to the client
+        res.json(channelList);
+    }
+    catch(error){
+        res.json(error);
+    }
+});
+
+
 
 // Example function to retrieve base64 string for a server
 function getBase64StringForServer(serverName) {

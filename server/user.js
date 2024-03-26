@@ -42,7 +42,7 @@ function addUser(username, password, email) {
     username,
     password: hashedPassword,
     email,
-    serverList:[],
+    ServerList:[],
   };
   usersDatabase.push(newUser);
   saveDatabase();

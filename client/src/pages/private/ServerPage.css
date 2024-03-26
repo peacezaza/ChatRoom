@@ -100,9 +100,9 @@
 
 .window-add-server 
 {
-    background-color: #778DA9; /* Desired background color */
+    /*background-color: #778DA9; !* Desired background color *!*/
     padding: 20px;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     text-align: center;
 }
   
@@ -110,3 +110,7 @@
 {
     margin-top: 0;
 }
+
+
+
+
