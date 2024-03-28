@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const { addUser, checkPassword, usersDatabase , checkDuplicateUser, checkDuplicateEmail , addServerList} = require('./user.js');
-const {addMessage , messages} = require('./message.js')
-const { addServer, saveDatabase ,getBase64StringByName, getChannelList, addChannel} = require('./chatServer.js');
+// const {addMessage , messages} = require('./message.js')
+const { addServer, saveDatabase ,getBase64StringByName, getChannelList, addChannel,addMessage,getMessage} = require('./chatServer.js');
 const cors = require('cors');
 const app = express();
 const http = require('http');
@@ -33,10 +33,10 @@ app.post('/login',  (req, res) => {
   let username = requestData.username;
   // console.log(usersDatabase); // Now, usersDatabase is available for logging
   // res;
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+  const token = jwt.sign({ username }, secretKey, { expiresIn: '24h' });
   if (checkPassword(username, password)) {
 
-    return res.header('Authorization', token).status(201).send({messages:"Login success!",token});
+    return res.header('Authorization', token).status(201).send({messages:"Login success!",token,username});
   } else {
     res.status(401).send("Login fail");
   }
@@ -76,10 +76,11 @@ app.get('/verify' , (req,res) => {
   const token = req.query.token;
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: 'Invalid token' });
+      console.log(decoded.username)
+      return res.status(401).json({ message: 'Invalid token' , username : decoded.username});
     }
     else{
-      return res.status(200).json({ message: 'valid token' });
+      return res.status(200).json({ message: 'valid token' , username : decoded.username});
     }
   })
 })
@@ -139,6 +140,27 @@ app.get('/getChannel',(req,res) =>{
     }
 });
 
+app.get('/getMessage', (req, res) => {
+  // Extract serverName and channelName from query parameters
+  const { serverName, channelName } = req.query;
+
+  // Check if both serverName and channelName are provided
+  if (!serverName || !channelName) {
+      return res.status(400).json({ error: 'Both serverName and channelName are required.' });
+  }
+
+  // Call getMessage function to retrieve messages
+  const messages = getMessage(serverName, channelName);
+
+  if (messages) {
+      // If messages are found, send them in the response
+      return res.status(200).json({ messages });
+  } else {
+      // If no messages are found or channel not found, send an error response
+      return res.status(404).json({ error: 'Messages not found or channel not found.' });
+  }
+});
+
 
 
 // Example function to retrieve base64 string for a server
@@ -148,9 +170,7 @@ function getBase64StringForServer(serverName) {
 }
 // WebSocket (Socket.io) integration
 
-server.listen(PORT, () => {
-  console.log('listening on *:' + PORT);
-});
+
 
 const io = socket(server, {
   cors: {
@@ -160,21 +180,51 @@ const io = socket(server, {
 });
 
 // Socket.io events
-io.on('connection', (socket) => {
-  console.log('A user connected');
+// io.on('connection', (socket) => {
+//   console.log('A user connected');
 
-  // Handle chat messages
-  socket.on('message', (data) => {
-    console.log('Received message:', data);
-    addMessage(data,'kong')
-    // Handle incoming data, you can also broadcast it to other connected clients
-    io.emit('message', data);
+//   // Handle chat messages
+//   socket.on('message', (data) => {
+//     console.log('Received message:', data);
+//     addMessage(data,'kong')
+//     // Handle incoming data, you can also broadcast it to other connected clients
+//     io.emit('message', data);
+//   });
+
+//   // Handle other events here
+
+//   // Handle disconnection
+//   socket.on('disconnect', () => {
+//     console.log('User disconnected');
+//   });
+// });
+io.on('connection', (socket) => {
+  console.log('New user connected');
+
+  // Handle joining a room
+  socket.on('joinRoom', (room) => {
+      socket.join(room);
+      console.log(`User joined room: ${room}`);
   });
 
-  // Handle other events here
+  // Handle chat message
+  socket.on('chatMessage', (data) => {
+      io.to(data.room).emit('message', data);
+      console.log(`Room Name : ${data.room} , Message : ${data.message}`)
+      const  tmp = data.room.split("-");
+      console.log(tmp[0] +" "+tmp[1]);
+      // console.log(data.room)
+      addMessage(tmp[0],tmp[1],{username:data.username,message:data.message})
+      io.emit('receiveMessage', data);
+  });
 
   // Handle disconnection
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+      console.log('User disconnected');
   });
+});
+
+
+server.listen(PORT, () => {
+  console.log('listening on *:' + PORT);
 });
