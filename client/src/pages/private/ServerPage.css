@@ -8,8 +8,9 @@
 .side-bar
 {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
     width: 5%;
     height: 100%;
     background: #0D1B2A;
@@ -25,8 +26,21 @@
 {
     height: 85px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    /* flex-direction: column; */
     background: #303E5A;
 }
+.profile-image
+{
+    margin: 0px 10px 0px 0px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+}
+
 .channel
 {
     height: 100%;
@@ -76,8 +90,9 @@
     border-radius: 50%;
 }
 
-.addServer
+.server-button
 {
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,9 +103,30 @@
     border-radius: 50%;
     margin: 10px 0px 0px 0px;
 }
+.addServer
+{
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #D9D9D9;
+    padding: 40%;
+    border-radius: 50%;
+    margin: 10px 0px 0px 0px;
+}
+.server-list
+{
+    align-self: flex-start;
+}
 .addServer img{
     width: 30px;
     height: 30px;
+}
+.server-button img{
+    width: 50px;
+    height: 50px;
 }
 
 .addServer:hover
@@ -113,4 +149,43 @@
 
 
 
+/* CSS for message alignment */
+.message-container {
+    display: flex;
+    justify-content: flex-end; /* Align messages to the right by default */
+}
 
+/* CSS for message box */
+.message {
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+/* CSS for right-aligned messages */
+.message-right {
+    /* background-color: lightblue; Background color for right-aligned messages */
+    color: black; /* Font color for right-aligned messages */
+}
+
+/* CSS for left-aligned messages */
+.message-left {
+    /* background-color: lightgreen; Background color for left-aligned messages */
+    color: black; /* Font color for left-aligned messages */
+}
+
+/* Adjust message alignment and color based on username */
+.message-container.message-left {
+    justify-content: flex-start; /* Align left-aligned messages to the left */
+}
+
+.message-container.message-left .message {
+    background-color: lightgreen; /* Background color for left-aligned messages */
+    color: black; /* Font color for left-aligned messages */
+}
+
+.message-container.message-right .message {
+    background-color: lightblue; /* Background color for right-aligned messages */
+    color: black; /* Font color for right-aligned messages */
+}

@@ -1,105 +1,162 @@
-import'./ServerPage.css'
+// ServerPage.js
+
 import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import axios from "axios";
-
+import io from 'socket.io-client'; // Import Socket.IO client
 import Channel from './Component/Channel';
-import {Route} from "react-router-dom";
+import './ServerPage.css'; // Import your CSS file here
 
-
-
-
-
-function ServerPage(){
+function ServerPage() {
+    const [socket, setSocket] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [serverList, setServerList] = useState([]);
     const [serverClicked, setServerClicked] = useState(false);
-    const [serverName, setServerName] = useState('')
-
-
+    const [serverName, setServerName] = useState('');
+    const [roomName, setRoomName] = useState('');
+    const [chatInput, setChatInput] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [username , setUsername] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            axios.get(`http://127.0.0.1:5000/getServerList?token=${token}`)
+            axios.get(`http://127.0.0.1:5000/verify?token=${token}`)
                 .then(response => {
                     // Handle successful response
-                    console.log('Server list:', response.data);
-                    setServerList(response.data); // Assuming the response is an array of server data
+                    // console.log('message', response.data.message);
+                    setUsername(response.data.username)
+                    // console.log(response.data.username)
+                    // setServerList(response.data); // Assuming the response is an array of server data
                 })
                 .catch(error => {
                     // Handle error
+                    console.error('message', error);
+                });
+            axios.get(`http://127.0.0.1:5000/getServerList?token=${token}`)
+                .then(response => {
+                    setServerList(response.data);
+                    console.log(response.data)
+
+                })
+                .catch(error => {
                     console.error('Error loading server list:', error);
                 });
+            
         } else {
             console.log('No token found');
         }
-    }, []); // Empty dependency array to only run once on component mount
+
+        const socket = io('http://localhost:5000');
+        setSocket(socket);
+
+        socket.on('receiveMessage', (data) => {
+            if (data.room === roomName) {
+                setMessages((prevMessages) => [...prevMessages, data]);
+            }
+        });
+
+        return () => {
+            if (socket) {
+                socket.disconnect();
+            }
+        };
+    }, [roomName]);
+
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         setSelectedImage(file);
     };
-    function convertImageToBase64(file, callback) {
+
+    const handleUpload = () => {
+        let name = document.querySelector(".AddServerName").value;
+        if (selectedImage != null) {
+            convertImageToBase64(selectedImage, function (base64String) {
+                let jwt = localStorage.getItem('token');
+                axios.post('http://127.0.0.1:5000/addServer', { name, base64String, jwt })
+                    .then(() => window.location.reload())
+                    .catch(error => console.error('Error uploading image:', error));
+            });
+        } else {
+            console.log("Error: No image selected");
+        }
+    };
+
+    const handleServerClick = (server) => {
+        setRoomName(server.serverName);
+        setServerClicked(true);
+        setServerName(server.serverName);
+    };
+
+    const handleSendMessage = () => {
+        if (socket && chatInput.trim() !== '') {
+            console.log(roomName)
+            socket.emit('chatMessage', { room: roomName, message: chatInput ,username:username});
+            setChatInput('');
+        }
+    };
+
+    const handleGetMessage = (e) => {
+        setChatInput(e.target.value);
+    };
+
+    const handleDataFromChild = (data) => {
+        console.log(data)
+        // let chat = document.querySelector('.messages')
+        if (roomName === serverName || roomName !== `${serverName}-${data}`) {
+            setRoomName(`${serverName}-${data}`);
+        }
+        // setMessages([])
+        axios.get('http://127.0.0.1:5000/getMessage', {
+            params: {
+                serverName: serverName,
+                channelName: data
+            }
+        })
+        .then(response => {
+            console.log(response.data.messages);
+            setMessages(response.data.messages)
+
+        })
+        .catch(error => {
+            console.error('There was a problem with the request:', error);
+        });
+        // ?serverName=exampleServer&channelName=exampleChannel
+        // chat.remove()
+    };
+
+    const convertImageToBase64 = (file, callback) => {
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const base64String = event.target.result;
             callback(base64String);
         };
         reader.readAsDataURL(file);
     };
-    const handleUpload =  () => {
-        // Here you can implement the logic to upload the selected image
-        let name = document.querySelector(".AddServerName").value;
-        if(selectedImage != null){
-            let a = "";
-            convertImageToBase64(selectedImage, function(base64String) {
-                console.log('Base64 string:', base64String);
-                let jwt = localStorage.getItem('token');
-                const response =  axios.post('http://127.0.0.1:5000/addServer', {name ,base64String,jwt});
-                window.location.reload();
-            });
-            console.log("Selected image:", selectedImage);
 
-        }
-        else{
-            console.log("Error")
-        }
-    };
-
-    const handleServerClick = (server) => {
-        console.log(server.serverName)
-        setServerClicked(true);
-        setServerName(server.serverName)
-
-
-    };
-
-    return(
+    return (
         <div className='con'>
             <div className="side-bar">
                 <div>
-                    {/* <button className='addServer'><img src={"/plus.png"} /></button> */}
                     <div className="server-list">
                         {serverList.map((server, index) => (
                             <div key={index}>
-                                <button className="addServer" onClick={() => handleServerClick(server)}>
+                                <button className="server-button" onClick={() => handleServerClick(server)}>
                                     <img src={server.base64String} alt={`Server ${index}`} className="server-image" />
                                 </button>
                             </div>
                         ))}
                     </div>
-                    <Popup trigger={<button className='addServer'><img src={"/plus.png"} /></button>} modal position="center center" className="custom-popup">
+                    <Popup trigger={<button className='addServer'><img src={"/plus.png"} alt="Add Server" /></button>} modal position="center center" className="custom-popup">
                         {close => (
                             <div className='window-add-server'>
                                 <h2>Add Server</h2>
-                                {/* <p>This is the content of the popup.</p> */}
                                 <div>
                                     <label>Server Name </label>
-                                    <input type='text' className='AddServerName' placeholder='Enter Name Server'/>
-
+                                    <input type='text' className='AddServerName' placeholder='Enter Name Server' />
                                 </div>
                                 <div>
-                                    <br/>
+                                    <br />
                                     <input type="file" accept="image/*" onChange={handleImageChange} />
                                     {selectedImage && (
                                         <div>
@@ -108,34 +165,45 @@ function ServerPage(){
                                         </div>
                                     )}
                                 </div>
-                                {/* <button onClick={close}>Close Popup</button> */}
                             </div>
                         )}
                     </Popup>
                 </div>
             </div>
             <div className="content">
-                <div className='nav-bar'></div>
+                <div className='nav-bar'>
+                    <div className='profile-image'></div>
+                    {/* <p className='name'>{username}</p> */}
+                </div>
                 <div className='channel'>
                     <div className='side-bar-channel'>
-                        {serverClicked &&  <Channel propFromParent={serverName}/>}
-
+                        {serverClicked && <Channel propFromParent={serverName} childToParent={handleDataFromChild} />}
                     </div>
                     <div className='chat'>
                         <div>
-                            <input type='text' className='ChatInput' placeholder='TypeHere...'/>
-                        </div>
-                        <div>
-                            <button className='SubmitChat'></button>
+                            <div className='messages'>
+                                {messages.map((msg, index) => (
+                                    <div key={index} className={`message-container ${msg.username === username ? 'message-right' : 'message-left'}`}>
+                                        <div className="message">
+                                            {msg.message}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {serverClicked&&<div>
+                                <div>
+                                    <input type='text' className='ChatInput' placeholder='TypeHere...' value={chatInput} onChange={handleGetMessage} />
+                                </div>
+                                <div>
+                                    <button className='SubmitChat' onClick={handleSendMessage}></button>
+                                </div>
+                            </div>}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-
-
-
-export default ServerPage
+export default ServerPage;

@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import './Channel.css';
 import axios from "axios";
 
-export default function Channel(props) {
+export default function Channel({propFromParent , childToParent}) {
     const [showPopup, setShowPopup] = useState(false);
     const [channelName, setChannelName] = useState('');
     const [channelList, setChannelList] = useState([]);
-    const { propFromParent } = props;
+    // const { propFromParent } = propFromParent;
 
     useEffect(() => {
         if (propFromParent) { // Check if propFromParent exists
@@ -55,8 +55,7 @@ export default function Channel(props) {
         }
     };
 
-    const handleChannelClick =() =>{
-
+    const handleChannelClick =(channel) =>{
     }
 
     return (
@@ -69,7 +68,7 @@ export default function Channel(props) {
             {showPopup && (
                 <div className="popup-overlay">
                     <div className="popup">
-                        <h2>Add New Channel</h2>
+                        <h2 style={{color:'white'}}>Add New Channel</h2>
                         <form onSubmit={handleFormSubmit}>
                             <input
                                 type="text"
@@ -88,11 +87,13 @@ export default function Channel(props) {
             {/* Display channel list */}
             <div>
                 {/*<h2>Channel List</h2>*/}
-                {channelList.map(channel => (
-                    <button key={channel.id} onClick={() => handleChannelClick(channel)}>
-                        {channel.name}
-                    </button>
-                ))}
+                <div className="button-channel">
+                    {channelList.map(channel => (
+                        <button onClick={() => childToParent(channel.Name)}>
+                            {(channel.Name)}
+                        </button>
+                    ))}
+                </div>
             </div>
         </>
     );
