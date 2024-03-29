@@ -9,7 +9,12 @@
     "channelList": [
       {
         "Name": "hello",
-        "channelMessage": []
+        "channelMessage": [
+          {
+            "username": "kong222",
+            "message": "fdsf"
+          }
+        ]
       }
     ]
   }
