@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { addUser, checkPassword, usersDatabase , checkDuplicateUser, checkDuplicateEmail , addServerList} = require('./user.js');
+const { addUser, checkPassword, usersDatabase , checkDuplicateUser, checkDuplicateEmail , addServerList,getAllUsers} = require('./user.js');
 // const {addMessage , messages} = require('./message.js')
 const { addServer, saveDatabase ,getBase64StringByName, getChannelList, addChannel,addMessage,getMessage} = require('./chatServer.js');
 const cors = require('cors');
@@ -58,6 +58,11 @@ app.post('/register', (req, res) => {
   }
 });
 
+app.get('/getAllUsers', (req, res) => {
+  const allUsers = getAllUsers();
+  res.status(200).json(allUsers);
+});
+
 app.post('/addServer' , (req,res) => {
   const requestData = req.body;
   console.log(requestData);
@@ -85,6 +90,8 @@ app.get('/verify' , (req,res) => {
   })
 })
 
+
+
 app.get('/getServerList', (req, res) => {
   const token = req.query.token; // Assuming token is passed as a query parameter
   // Verify the token
@@ -111,6 +118,17 @@ app.get('/getServerList', (req, res) => {
   });
 });
 
+app.post('/joinServer' , (req , res) => {
+  try{
+    const requestData = req.body;
+    console.log(requestData);
+    addServerList( requestData.username,requestData.serverName)
+  }
+  catch(error){
+      console.log(error)
+      res.send(error)
+  }
+});
 
 app.post('/addChannel',(req,res) => {
     try{

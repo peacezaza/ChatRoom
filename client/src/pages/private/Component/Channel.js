@@ -60,7 +60,7 @@ export default function Channel({propFromParent , childToParent}) {
     }
 
     return (
-        <>
+        <div>
             <div className='add-channel'>
                 <h2>Chat Channel</h2>
                 <button onClick={handleButtonClick}><img src='/plus.png' alt="Add Channel"/></button>
@@ -96,6 +96,6 @@ export default function Channel({propFromParent , childToParent}) {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 }

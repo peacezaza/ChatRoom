@@ -5,7 +5,8 @@
     "password": "$2b$10$fz8/cNmJQgyBUgRnBNVroeHCSi2RZ7d2/GMTKh5pmhYy.ZGnmv9oW",
     "email": "pannet.v@ku.th",
     "ServerList": [
-      "TEST01"
+      "TEST01",
+      "TEST02"
     ]
   },
   {
@@ -14,7 +15,28 @@
     "password": "$2b$10$fPS/RlXva1Lw7.Pray7WIeX.h/fjL.sWhqxbYUCKIwypzkz/ll992",
     "email": "qaw",
     "ServerList": [
-      "TEST01"
+      "TEST01",
+      "TEST02"
+    ]
+  },
+  {
+    "id": 3,
+    "username": "kong111",
+    "password": "$2b$10$yOUmJsgkKP0Q.7eXAtKd7ug63HHc1CZj6uq3ix1UEriujrIwxYZEi",
+    "email": "ppp",
+    "ServerList": [
+      "TEST01",
+      "TEST02"
+    ]
+  },
+  {
+    "id": 4,
+    "username": "kong222",
+    "password": "$2b$10$ePkQ1gmmw0Zup8beviIH/OzXND.KzvAFkRkoVernO9Wd5eo7.Qq2S",
+    "email": "1312313",
+    "ServerList": [
+      "TEST01",
+      "TEST02"
     ]
   }
 ]
