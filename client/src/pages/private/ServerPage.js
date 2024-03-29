@@ -6,7 +6,6 @@ import axios from "axios";
 import io from 'socket.io-client'; // Import Socket.IO client
 import Channel from './Component/Channel';
 import './ServerPage.css'; // Import your CSS file here
-import ScrollArea from 'react-scrollbar';
 
 function ServerPage() {
     const [socket, setSocket] = useState(null);
@@ -206,11 +205,6 @@ function ServerPage() {
             .catch(error => console.error('Error uploading image:', error));
     };
 
-    function handleKeyPress(event) {
-        if (event.key === 'Enter') {
-            handleSendMessage();
-        }
-    }
 
     return (
         <div className='con'>
