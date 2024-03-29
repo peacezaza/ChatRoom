@@ -199,6 +199,12 @@ function ServerPage() {
             .catch(error => console.error('Error uploading image:', error));
     };
 
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            handleSendMessage();
+        }
+    }
+
     return (
         <div className='con'>
             <div className="side-bar">
@@ -322,7 +328,7 @@ function ServerPage() {
                             </div>
                             {serverClicked&&<div>
                                 <div>
-                                    <input type='text' className='ChatInput' placeholder='TypeHere...' value={chatInput} onChange={handleGetMessage} />
+                                    <input type='text' className='ChatInput' placeholder='TypeHere...' value={chatInput} onChange={handleGetMessage} onKeyDown={handleKeyPress}/>
                                 </div>
                                 <div>
                                     <button className='SubmitChat' onClick={handleSendMessage}></button>
