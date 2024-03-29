@@ -47,9 +47,10 @@ export default function Channel({propFromParent , childToParent}) {
         e.preventDefault();
         console.log("Channel Name:", channelName);
         handleClosePopup();
+        let data = {Name:channelName,channelMessage:[]};
+        setChannelList([...channelList, data]);
         try {
             const response = await axios.post('http://127.0.0.1:5000/addChannel', { channelName, serverName: propFromParent });
-            window.location.reload();
         } catch(error) {
             console.log(error);
         }

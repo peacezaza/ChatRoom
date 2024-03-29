@@ -17,6 +17,7 @@ function ServerPage() {
     const [chatInput, setChatInput] = useState('');
     const [messages, setMessages] = useState([]);
     const [username , setUsername] = useState('');
+    const [hoveredServer, setHoveredServer] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -72,9 +73,15 @@ function ServerPage() {
         let name = document.querySelector(".AddServerName").value;
         if (selectedImage != null) {
             convertImageToBase64(selectedImage, function (base64String) {
+                let data = { serverName: name, base64String, channelList: [] };
+                setServerList([...serverList, data]);
+                setSelectedImage(null)
                 let jwt = localStorage.getItem('token');
                 axios.post('http://127.0.0.1:5000/addServer', { name, base64String, jwt })
-                    .then(() => window.location.reload())
+                    .then(() => {
+                        // Add the new server data to the serverList state
+                        // setServerList([...serverList, data]);
+                    })
                     .catch(error => console.error('Error uploading image:', error));
             });
         } else {
@@ -133,6 +140,14 @@ function ServerPage() {
         };
         reader.readAsDataURL(file);
     };
+    const handleServerButtonHover = (server) => {
+        setHoveredServer(server);
+    };
+
+    // Function to handle mouse leave from server button
+    const handleMouseLeave = () => {
+        setHoveredServer(null);
+    };
 
     return (
         <div className='con'>
@@ -141,9 +156,28 @@ function ServerPage() {
                     <div className="server-list">
                         {serverList.map((server, index) => (
                             <div key={index}>
-                                <button className="server-button" onClick={() => handleServerClick(server)}>
-                                    <img src={server.base64String} alt={`Server ${index}`} className="server-image" />
-                                </button>
+                                <Popup
+                                    trigger={
+                                        <button
+                                            className="server-button"
+                                            onClick={() => handleServerClick(server)}
+                                            onMouseEnter={() => handleServerButtonHover(server)}
+                                            onMouseLeave={handleMouseLeave}
+                                        >
+                                            <img src={server.base64String} alt={`Server ${index}`} className="server-image" />
+                                        </button>
+                                    }
+                                    position="right center"
+                                    mouseEnterDelay={200}
+                                    mouseLeaveDelay={300}
+                                    on="hover"
+                                    contentStyle={{ padding: '5px' ,margin:'0px 0px 0px 10px ',width:'80px',opacity: '0.5'}} // Adjust as per your requirement
+                                    arrow={false}
+                                    closeOnDocumentClick
+                                    open={hoveredServer === server}
+                                >
+                                    <div>{server.serverName}</div>
+                                </Popup>
                             </div>
                         ))}
                     </div>
@@ -161,7 +195,10 @@ function ServerPage() {
                                     {selectedImage && (
                                         <div>
                                             <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '30px', maxHeight: '30px' }} />
-                                            <button onClick={handleUpload}>Add Server</button>
+                                            <button onClick={() => {
+                                                handleUpload();
+                                                close(); // Close the popup after uploading
+                                            }}>Add Server</button>
                                         </div>
                                     )}
                                 </div>
@@ -172,7 +209,9 @@ function ServerPage() {
             </div>
             <div className="content">
                 <div className='nav-bar'>
-                    <div className='profile-image'></div>
+                    <div className='profile-image'>
+                        <img src={"/profile-user.png"}/>
+                    </div>
                     {/* <p className='name'>{username}</p> */}
                 </div>
                 <div className='channel'>
@@ -184,8 +223,11 @@ function ServerPage() {
                             <div className='messages'>
                                 {messages.map((msg, index) => (
                                     <div key={index} className={`message-container ${msg.username === username ? 'message-right' : 'message-left'}`}>
-                                        <div className="message">
-                                            {msg.message}
+                                        <div>
+                                            <div className={`${msg.username === username ? 'align-right' : 'align-left'}`}>
+                                                {msg.username}
+                                            </div>
+                                            <div className="message">{msg.message}</div>
                                         </div>
                                     </div>
                                 ))}

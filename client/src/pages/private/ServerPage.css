@@ -34,10 +34,13 @@
 }
 .profile-image
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0px 10px 0px 0px;
     width: 50px;
     height: 50px;
-    background: white;
+    /* background: white; */
     border-radius: 50%;
 }
 
@@ -162,7 +165,15 @@
     border-radius: 8px;
     max-width: 70%;
 }
+.align-right {
+    text-align: right;
+    margin-right: 10px;
+}
 
+.align-left {
+    text-align: left;
+    margin-left: 10px;
+}
 /* CSS for right-aligned messages */
 .message-right {
     /* background-color: lightblue; Background color for right-aligned messages */
@@ -188,4 +199,9 @@
 .message-container.message-right .message {
     background-color: lightblue; /* Background color for right-aligned messages */
     color: black; /* Font color for right-aligned messages */
+}
+.profile-image img
+{
+    width: 50px;
+    height: 50px;
 }
