@@ -54,8 +54,11 @@
 }
 .side-bar-channel
 {
-    height: 100%;
     width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
     background: #415A77;
 }
 .chat
@@ -204,4 +207,29 @@
 {
     width: 50px;
     height: 50px;
+}
+.other-seting
+{
+    width: 100%;
+    height: 15%;
+    background: #303E5A;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.other-seting button
+{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D9D9D9;
+}
+.other-seting button img
+{
+    width: 30px;
+    height: 30px;
 }

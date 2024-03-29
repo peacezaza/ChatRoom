@@ -72,6 +72,10 @@ function checkDuplicateEmail(email){
   return usersDatabase.find((u) => (u.email === email))
 }
 
+function getAllUsers() {
+  return usersDatabase.map(user => ({ id: user.id, username: user.username }));
+}
+
 initializeDatabase();
 
 module.exports = {
@@ -80,5 +84,6 @@ module.exports = {
   usersDatabase, // Exporting the usersDatabase array for use in other files
   addServerList,
   checkDuplicateUser,
-  checkDuplicateEmail
+  checkDuplicateEmail,
+  getAllUsers
 };

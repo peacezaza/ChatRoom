@@ -18,6 +18,8 @@ function ServerPage() {
     const [messages, setMessages] = useState([]);
     const [username , setUsername] = useState('');
     const [hoveredServer, setHoveredServer] = useState(null);
+    const [userList , setUserList] = useState([]);
+    const [showUserList , setShowUserList] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -34,9 +36,20 @@ function ServerPage() {
                     // Handle error
                     console.error('message', error);
                 });
+                
             axios.get(`http://127.0.0.1:5000/getServerList?token=${token}`)
                 .then(response => {
                     setServerList(response.data);
+                    console.log(response.data)
+
+                })
+                .catch(error => {
+                    console.error('Error loading server list:', error);
+                });
+            
+            axios.get(`http://127.0.0.1:5000/getAllUsers`)
+                .then(response => {
+                    setUserList(response.data);
                     console.log(response.data)
 
                 })
@@ -148,6 +161,43 @@ function ServerPage() {
     const handleMouseLeave = () => {
         setHoveredServer(null);
     };
+    
+    const handleLoadUser = () => {
+        let substring = document.querySelector('.search-input').value
+        const filteredUsers = userList.filter(user => user.username.includes(substring));
+        // Now, filteredUsers contains only the users whose username contains the specified substring
+        setShowUserList(filteredUsers)
+        console.log(filteredUsers);
+        // You can perform further operations with filteredUsers as needed
+    };
+    const handleAddMember = (username) => {
+        // Toggle logic
+        const token = localStorage.getItem('token');
+        setShowUserList(prevList => {
+            const newList = prevList.map(user => {
+                if (user.username === username) {
+                    return { ...user, isAdding: !user.isAdding };
+                }
+                return user;
+            });
+            return newList;
+        });
+        axios.post('http://127.0.0.1:5000/joinServer', { username , serverName})
+            .then(() => {
+                console.log("Join Server")
+
+                axios.get(`http://127.0.0.1:5000/getServerList?token=${token}`)
+                    .then(response => {
+                        setServerList(response.data);
+                        console.log(response.data)
+
+                    })
+                    .catch(error => {
+                        console.error('Error loading server list:', error);
+                    });
+            })
+            .catch(error => console.error('Error uploading image:', error));
+    };
 
     return (
         <div className='con'>
@@ -182,28 +232,26 @@ function ServerPage() {
                         ))}
                     </div>
                     <Popup trigger={<button className='addServer'><img src={"/plus.png"} alt="Add Server" /></button>} modal position="center center" className="custom-popup">
-                        {close => (
-                            <div className='window-add-server'>
-                                <h2>Add Server</h2>
-                                <div>
-                                    <label>Server Name </label>
-                                    <input type='text' className='AddServerName' placeholder='Enter Name Server' />
-                                </div>
-                                <div>
-                                    <br />
-                                    <input type="file" accept="image/*" onChange={handleImageChange} />
-                                    {selectedImage && (
-                                        <div>
-                                            <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '30px', maxHeight: '30px' }} />
-                                            <button onClick={() => {
-                                                handleUpload();
-                                                close(); // Close the popup after uploading
-                                            }}>Add Server</button>
-                                        </div>
-                                    )}
-                                </div>
+                    {close => (
+                        <div className='window-add-server'>
+                            <h2>Add Server</h2>
+                            <div>
+                                <label>Server Name </label>
+                                <input type='text' className='AddServerName' placeholder='Enter Name Server' />
                             </div>
-                        )}
+                            <div>
+                                <br />
+                                <input type="file" accept="image/*" onChange={handleImageChange} />
+                                {selectedImage && (
+                                    <div>
+                                        <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '30px', maxHeight: '30px' }} />
+                                        <button onClick={handleUpload}>Add Server</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
                     </Popup>
                 </div>
             </div>
@@ -217,6 +265,46 @@ function ServerPage() {
                 <div className='channel'>
                     <div className='side-bar-channel'>
                         {serverClicked && <Channel propFromParent={serverName} childToParent={handleDataFromChild} />}
+                        {serverClicked&&<div className='other-seting'>
+                        <Popup
+                            trigger={
+                                <button>
+                                    <img src={'/add-user.png'} />
+                                </button>
+                            }
+                            position="center"
+                            contentStyle={{ padding: '5px' ,margin:'0px 0px 0px 10px ',width:'600px',height:'600px'}}
+                            modal
+                            >
+                                {
+                                    <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+                                        <h1>Add Member</h1>
+                                        <div className='search' style={{display:'flex',width:'100%',alignItems:'center',justifyContent:'center'}}>
+                                            <input className='search-input' style={{width:'90%' , height:'30px'}} placeholder='Enter Username' onChange={handleLoadUser}></input>
+                                            {/* <button className='search-button' style={{width:'10px',height:'10px',borderRadius:'100%',padding:'20px'}}>search</button> */}
+                                        </div>
+                                        <div className='All-Member' style={{display:'flex',width:'80%',height:'80%',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+                                            {showUserList.map((element, index) => (
+                                                <div key={index} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                                    <div style={{ flexGrow: 1 }}>{element.username}</div>
+                                                    <button style={{ backgroundColor: 'green', width: '60px', height: '30px' }} onClick={() => handleAddMember(element.username)}>
+                                                        {element.isAdding ? 'Cancel' : 'Add'}
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            {/* <div>fdsf</div>
+                                            <div>fdsf</div>
+                                            <div>fdsf</div>
+                                            <div>fdsf</div> */}
+                                        </div>
+                                    </div>
+                                }
+                        </Popup>
+                            <button>
+                                <img src={'/settings.png'}/>
+                            </button>
+
+                        </div>}
                     </div>
                     <div className='chat'>
                         <div>
