@@ -68,7 +68,11 @@
     background: #778DA9;
 }
 /* 303E5A */
-
+.messages-chat
+{
+    margin: 10px;
+    height: 560px;
+}
 
 .ChatInput
 {
@@ -177,6 +181,22 @@
     text-align: left;
     margin-left: 10px;
 }
+.align-right-message {
+    background: lightgreen;
+    padding: 10px;
+    border-radius: 50px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.align-left-message{
+    background: lightblue;
+    text-align: left;
+    padding: 10px;
+
+    border-radius: 50px;
+    margin-left: 10px;
+}
 /* CSS for right-aligned messages */
 .message-right {
     /* background-color: lightblue; Background color for right-aligned messages */
@@ -191,17 +211,25 @@
 
 /* Adjust message alignment and color based on username */
 .message-container.message-left {
-    justify-content: flex-start; /* Align left-aligned messages to the left */
+    justify-content: flex-start; 
 }
 
 .message-container.message-left .message {
     background-color: lightgreen; /* Background color for left-aligned messages */
+    /* width: 100%; */
     color: black; /* Font color for left-aligned messages */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
 }
 
 .message-container.message-right .message {
     background-color: lightblue; /* Background color for right-aligned messages */
+    /* width: 100%; */
     color: black; /* Font color for right-aligned messages */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
 }
 .profile-image img
 {

@@ -6,6 +6,7 @@ import axios from "axios";
 import io from 'socket.io-client'; // Import Socket.IO client
 import Channel from './Component/Channel';
 import './ServerPage.css'; // Import your CSS file here
+import ScrollArea from 'react-scrollbar';
 
 function ServerPage() {
     const [socket, setSocket] = useState(null);
@@ -145,6 +146,12 @@ function ServerPage() {
         // chat.remove()
     };
 
+    const handleKeyPress = (event) =>{
+        if(event.key == "Enter"){
+            handleSendMessage();
+        }
+    };
+
     const convertImageToBase64 = (file, callback) => {
         const reader = new FileReader();
         reader.onload = function (event) {
@@ -264,7 +271,7 @@ function ServerPage() {
             <div className="content">
                 <div className='nav-bar'>
                     <div className='profile-image'>
-                        <img src={"/profile-user.png"}/>
+                        <button style={{width:'50px',height:'50px',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'50%',padding:'20px'}} onClick={()=>{localStorage.removeItem('token');window.location.reload()}}><img src={"/profile-user.png"}/></button>
                     </div>
                     {/* <p className='name'>{username}</p> */}
                 </div>
@@ -314,19 +321,21 @@ function ServerPage() {
                     </div>
                     <div className='chat'>
                         <div>
-                            <div className='messages'>
-                                {messages.map((msg, index) => (
-                                    <div key={index} className={`message-container ${msg.username === username ? 'message-right' : 'message-left'}`}>
-                                        <div>
-                                            <div className={`${msg.username === username ? 'align-right' : 'align-left'}`}>
-                                                {msg.username}
+                            <div style={{width:'100%',height:'100%',overflowY:'scroll'}}>
+                                <div className='messages-chat'>
+                                    {messages.map((msg, index) => (
+                                        <div key={index} style={{margin:'20px 0px 0px 0px'}} className={`message-container ${msg.username === username ? 'message-right' : 'message-left'}`}>
+                                            <div>
+                                                <div style={{margin:'0px 0px 5px 0px'}} className={`${msg.username === username ? 'align-right' : 'align-left'}`}>
+                                                    {msg.username}
+                                                </div>
+                                                <div className={`${msg.username === username ? 'align-right-message' : 'align-left-message'}`}>{msg.message}</div>
                                             </div>
-                                            <div className="message">{msg.message}</div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                            {serverClicked&&<div>
+                            {serverClicked&&<div >
                                 <div>
                                     <input type='text' className='ChatInput' placeholder='TypeHere...' value={chatInput} onChange={handleGetMessage} onKeyDown={handleKeyPress}/>
                                 </div>
